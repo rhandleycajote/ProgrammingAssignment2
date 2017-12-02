@@ -7,17 +7,17 @@
 ## makeCacheMatrix, if its there, then retrieve it. If not, then solve it.
 
 ## Write a short comment describing this function
-## creates the list of function
+## creates the list of functions for the Matrix
 ## usage: A <- makeCacheMatrix(matrix(c(1,2,3,4),nrow=2,ncol=2)
 makeCacheMatrix <- function(x = matrix()) {
-     m <- NULL
-     set <- function(y){
+     m <- NULL                # set to NULL at the beginning
+     set <- function(y){      # defines the set value function
           x <<- y
           m <<- NULL
      }
-     get <- function() x
-     setinv <- function(inv) m <<- inv
-     getinv <- function() m
+     get <- function() x      # defines the get value function
+     setinv <- function(inv) m <<- inv # define the set function
+     getinv <- function() m        # define the get inverse function
      list(set = set, get = get,
           setinv = setinv,
           getinv = getinv)
@@ -31,11 +31,12 @@ cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
      m <- x$getinv()
      if(!is.null(m)){
+          # if the return value is not NULL then return the set value
           message("getting cached data")
           return(m)
      }
-     data <- x$get()
-     m <- solve(data,...)
+     data <- x$get() 
+     m <- solve(data,...) # calculates the inverse of the matrix
      x$setinv(m)
      m
 }
